@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const SingUp = () => {
 
@@ -29,12 +30,16 @@ export const SingUp = () => {
 
 export const Login = () => {
 
+    const { store, actions } = useContext(Context)
     return (
 
         <form className="container" onSubmit={(e) => {
             event.preventDefault()
-            console.log(e.target[0].value)
-            console.log(e.target[1].value)
+            email = e.target[0].value
+            password = e.target[1].value
+            actions.getToken({
+                email, password
+            })
         }}>
             <div className="mb-3 row">
                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Email</label>

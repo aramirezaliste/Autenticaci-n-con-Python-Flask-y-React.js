@@ -17,11 +17,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			getToken: () => {
-				const login = async (username, password) => {
-					const resp = await fetch(`https://your_api.com/token`, {
+				const login = async (email, password) => {
+					const resp = await fetch(`https://3001-4geeksacade-reactflaskh-gncz9nkwcp6.ws-us87.gitpod.io/login`, {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({ username: "joe", password: "1234" })
+						body: JSON.stringify({ email: email, password: password })
 					})
 
 					if (!resp.ok) throw Error("There was a problem in the login request")

@@ -112,14 +112,14 @@ def login():
     else:
         return jsonify({"msg": "Bad username or password"}), 401
 
-@app.route("/protected", methods=["GET"])
+@app.route("/privated", methods=["GET"])
 @jwt_required()
 def protected():
     # Accede a la identidad del usuario actual con get_jwt_identity
-    current_user_id = get_jwt_identity()
-    user = User.filter.get(current_user_id)
+    identidad = get_jwt_identity()
+    user = User.filter.get(identidad)
     
-    return jsonify({"id": user.id, "email": user.email }), 200
+    return jsonify({ "email": user.email }), 200
 
 
 
