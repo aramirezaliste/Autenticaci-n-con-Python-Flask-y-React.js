@@ -11,6 +11,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { SingUpView } from "./pages/singup";
 import { LoginView } from "./pages/login";
+import { PrivateUserView } from "./pages/private_user";
 
 
 //create your first component
@@ -27,6 +28,7 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<PrivateUserView />} path="/user" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<SingUpView />} path="/singup" />
                         <Route element={<LoginView />} path="/login" />
