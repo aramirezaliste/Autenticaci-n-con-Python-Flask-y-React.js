@@ -5,6 +5,7 @@ export const LogOut = () => {
     function eraseLocalStorage() {
         localStorage.removeItem('user-token')
         localStorage.removeItem('jwt-token')
+        localStorage.removeItem('user-email')
     };
 
     function redirectHome() {

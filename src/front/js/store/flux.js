@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			getToken: (email, contraseña) => {
 				const Swal = require('sweetalert2')
+				const store = getStore()
 				if (email && contraseña) {
 					var myHeaders = new Headers();
 					myHeaders.append("Content-Type", "application/json");
@@ -53,8 +54,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 								})
 								setStore({ user: result.email })
 								localStorage.setItem('user-token', JSON.stringify(result.token));
-								window.location.href = "/user";
-
+								localStorage.setItem('user-email', JSON.stringify(result.email));
+								setTimeout(() => {
+									window.location.href = "/user";
+								}, 1000)
 							}
 						})
 						.catch(error => {
@@ -96,7 +99,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 									title: 'Registro completado',
 									icon: 'success',
 								})
-								window.location.href = "/login";
+								setTimeout(() => {
+									window.location.href = "/user";
+								}, 1000)
 
 							}
 						})
