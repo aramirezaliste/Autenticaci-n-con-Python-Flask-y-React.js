@@ -1,7 +1,9 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			user: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -16,30 +18,95 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
-			getToken: () => {
-				const login = async (email, password) => {
-					const resp = await fetch(`https://3001-4geeksacade-reactflaskh-gncz9nkwcp6.ws-us87.gitpod.io/login`, {
-						method: "POST",
-						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({ email: email, password: password })
-					})
+			getToken: (email, contraseña) => {
+				const Swal = require('sweetalert2')
+				if (email && contraseña) {
+					var myHeaders = new Headers();
+					myHeaders.append("Content-Type", "application/json");
 
-					if (!resp.ok) throw Error("There was a problem in the login request")
+					var raw = JSON.stringify({
+						"email": email,
+						"password": contraseña
+					});
 
-					if (resp.status === 401) {
-						throw ("Invalid credentials")
-					}
-					else if (resp.status === 400) {
-						throw ("Invalid email or password format")
-					}
-					const data = await resp.json()
-					// save your token in the localStorage
-					//also you should set your user into the store using the setStore function
-					localStorage.setItem("jwt-token", data.token);
+					var requestOptions = {
+						method: 'POST',
+						headers: myHeaders,
+						body: raw,
+						redirect: 'follow'
+					};
 
-					return data
+					fetch("https://3001-4geeksacade-reactflaskh-gncz9nkwcp6.ws-us87.gitpod.io/login", requestOptions)
+						.then(response => response.json())
+						.then(result => {
+							console.log(result)
+							if (!result.token) {
+								Swal.fire({
+									title: 'Error: usuario no registrado, email o password incorrectos',
+									icon: 'error',
+								})
+							}
+							else {
+								Swal.fire({
+									title: 'Ingreso completado',
+									icon: 'success',
+								})
+								setStore({ user: result.email })
+								localStorage.setItem('user-token', JSON.stringify(result.token));
+								window.location.href = "/user";
+
+							}
+						})
+						.catch(error => {
+							console.log('error', error)
+						});
+				}
+
+			},
+			registro: (email, password) => {
+				const Swal = require('sweetalert2')
+				if (email && password) {
+					var myHeaders = new Headers();
+					myHeaders.append("Content-Type", "application/json");
+
+					var raw = JSON.stringify({
+						"email": email,
+						"password": password
+					});
+
+					var requestOptions = {
+						method: 'POST',
+						headers: myHeaders,
+						body: raw,
+						redirect: 'follow'
+					};
+
+					fetch("https://3001-4geeksacade-reactflaskh-gncz9nkwcp6.ws-us87.gitpod.io/signup", requestOptions)
+						.then(response => response.json())
+						.then(result => {
+							console.log(result)
+							if (!result.email) {
+								Swal.fire({
+									title: 'Error: email o password incorrectos',
+									icon: 'error',
+								})
+							}
+							else {
+								Swal.fire({
+									title: 'Registro completado',
+									icon: 'success',
+								})
+								window.location.href = "/login";
+
+							}
+						})
+						.catch(error => console.log('error', error));
 				}
 			},
+
+
+
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

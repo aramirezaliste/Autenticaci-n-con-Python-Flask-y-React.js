@@ -107,7 +107,7 @@ def login():
     if(user):
     #otorgar permisos
         expira = datetime.timedelta(minutes=3)
-        token_access = create_access_token(identity=email, expires_delta=expira)
+        token_access = create_access_token(identity=body, expires_delta=expira)
         return jsonify({"token": token_access, "email": email}), 200
     else:
         return jsonify({"msg": "Bad username or password"}), 401
@@ -117,9 +117,8 @@ def login():
 def protected():
     # Accede a la identidad del usuario actual con get_jwt_identity
     identidad = get_jwt_identity()
-    user = User.filter.get(identidad)
-    
-    return jsonify({ "email": user.email }), 200
+
+    return jsonify(identidad)
 
 
 

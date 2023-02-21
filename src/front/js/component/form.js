@@ -3,12 +3,20 @@ import { Context } from "../store/appContext";
 
 export const SingUp = () => {
 
+    const { store, actions } = useContext(Context)
+
     return (
 
         <form className="container" onSubmit={(e) => {
-            event.preventDefault()
-            console.log(e.target[0].value)
-            console.log(e.target[1].value)
+            e.preventDefault()
+            let email = e.target[0].value
+            let password = e.target[1].value
+            if (email == "" || password == "") {
+                alert("Falta contraseña o Email")
+            } else {
+                actions.registro(email, password)
+            }
+
         }}>
             <div className="mb-3 row">
                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Email</label>
@@ -31,15 +39,19 @@ export const SingUp = () => {
 export const Login = () => {
 
     const { store, actions } = useContext(Context)
+
     return (
 
         <form className="container" onSubmit={(e) => {
-            event.preventDefault()
-            email = e.target[0].value
-            password = e.target[1].value
-            actions.getToken({
-                email, password
-            })
+            e.preventDefault()
+            let email = e.target[0].value
+            let password = e.target[1].value
+            if (email == "" || password == "") {
+                alert("Falta contraseña o Email")
+            } else {
+                actions.getToken(email, password)
+            }
+
         }}>
             <div className="mb-3 row">
                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Email</label>
@@ -53,7 +65,7 @@ export const Login = () => {
                     <input type="password" className="form-control" id="inputPassword" />
                 </div>
             </div>
-            <button className="btn btn-success" type="submit">Iniciar Sesion</button>
+            <button className="btn btn-success" type="submit" >Iniciar Sesion</button>
         </form>
 
     )

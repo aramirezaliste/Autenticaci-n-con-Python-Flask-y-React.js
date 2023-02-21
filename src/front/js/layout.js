@@ -14,6 +14,8 @@ import { LoginView } from "./pages/login";
 import { PrivateUserView } from "./pages/private_user";
 
 
+
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain

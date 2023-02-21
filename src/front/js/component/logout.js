@@ -3,7 +3,8 @@ import React from "react";
 export const LogOut = () => {
 
     function eraseLocalStorage() {
-        localStorage.removeItem('keyName')
+        localStorage.removeItem('user-token')
+        localStorage.removeItem('jwt-token')
     };
 
     function redirectHome() {
